@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">贝克街42号－凶宅</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">重置游戏</string>
+    <string name="title_activity_video">VideoActivity</string>
+    <string name="title_activity_radio">RadioActivity</string>
+    <string name="nid001">bk42-lr001</string>
+    <string name="nid002">bk42-lr002</string>
+    <string name="nid003">bk42-lr003</string>
+    <string name="nid004">bk42-lr004</string>
+    <string name="nid005">bk42-lr005</string>
+    <string name="nid006">bk42-lr006</string>
+    <string name="nid007">bk42-lr007</string>
+    <string name="ntitle001">勇士们你们好</string>
+    <string name="ntitle002">米洛陶洛斯</string>
+    <string name="ntitle003">法拉奥</string>
+    <string name="ntitle004">阿喀琉斯</string>
+    <string name="ntitle005">塔纳托斯</string>
+    <string name="ntitle006">美杜莎</string>
+    <string name="ntitle007">奥丁</string>
+    <color name="alpha_white">#55FFFFFF</color>
+    <color name="alpha0">#00ffffff</color>
+    <color name="alpha_black">#55000000</color>
+    <color name="white">#ddffffff</color>
+
+</resources>
