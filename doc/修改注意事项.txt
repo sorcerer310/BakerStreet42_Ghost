@@ -1,0 +1,2 @@
+1:在Notifier.java文件88行修改要打开的Activity,向Intent中增加传输的数据
+2:一些自定义数据可以用参数Uri来传递,格式为data:abcdefg
