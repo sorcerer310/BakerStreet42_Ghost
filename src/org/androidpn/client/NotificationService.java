@@ -77,7 +77,6 @@ public class NotificationService extends Service {
         executorService = Executors.newSingleThreadExecutor();
         taskSubmitter = new TaskSubmitter(this);
         taskTracker = new TaskTracker(this);
-//        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$NotificationService");
     }
 
     @Override

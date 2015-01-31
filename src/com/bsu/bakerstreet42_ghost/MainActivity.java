@@ -5,18 +5,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-import com.bsu.bakerstreet42_ghost.listener.OnNfcReadListener;
-import com.bsu.bakerstreet42_ghost.tools.NfcActivityHelper;
+//import org.androidpn.demoapp.R;
+
+
+import org.androidpn.client.ServiceManager;
+
 import com.bsu.bakerstreet42_ghost.tools.Utils;
 import com.bsu.bakerstreet42_ghost.widget.adapter.ListViewSimpleAdapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -52,7 +51,12 @@ public class MainActivity extends Activity {
 	private ListViewSimpleAdapter sa;
 	
 	//视频音频资源路径
-	private String vpath = "android.resource://com.bsu.bakerstreet42/";
+	public final static String VPATH = "android.resource://com.bsu.bakerstreet42_ghost/";
+	public final static String VTITLE1 = "凶宅视频1";
+	public final static String VTITLE2 = "凶宅视频2";
+	public final static String VTITLE3 = "凶宅视频3";
+	public final static String VTITLE4 = "凶宅视频4";
+	public final static String VTITLE5 = "凶宅视频5";
 	
 	//程序列表持久数据，防止玩家退出程序再进入获得的数据不对，如要重置需要在游戏重置功能操作
 	private SharedPreferences settings;
@@ -73,11 +77,18 @@ public class MainActivity extends Activity {
 		if(listdata==null)
 			listdata = new ArrayList<Map<String,Object>>();
 		
-		initPreferences();						//初始化持久化数据
-//		initNfcHelper();						//初始化nfc得帮助类
-		initMessage();							//初始化消息
-		initResetGameDialog();					//初始化重置数据窗口
+        //开启接收消息的服务
+        ServiceManager serviceManager = new ServiceManager(this);
+        serviceManager.setNotificationIcon(R.drawable.notification);
+        serviceManager.startService();
 		
+//		initPreferences();						//初始化持久化数据
+//		initNfcHelper();						//初始化nfc得帮助类
+//		initMessage();							//初始化消息
+//		initResetGameDialog();					//初始化重置数据窗口
+		
+		
+
 	}
 
 	/**
@@ -93,8 +104,8 @@ public class MainActivity extends Activity {
 		editor.putBoolean("bk42-xz003", true);
 		editor.putBoolean("bk42-xz004", true);
 		editor.putBoolean("bk42-xz005", true);
-		editor.putBoolean("bk42-xz006", true);
-		editor.putBoolean("bk42-xz007", true);
+//		editor.putBoolean("bk42-xz006", true);
+//		editor.putBoolean("bk42-xz007", true);
 		editor.commit();
 		
 		listdata.clear();
@@ -104,8 +115,8 @@ public class MainActivity extends Activity {
 		makeListDataInitPreByID("bk42-xz003");
 		makeListDataInitPreByID("bk42-xz004");
 		makeListDataInitPreByID("bk42-xz005");
-		makeListDataInitPreByID("bk42-xz006");
-		makeListDataInitPreByID("bk42-xz007");
+//		makeListDataInitPreByID("bk42-xz006");
+//		makeListDataInitPreByID("bk42-xz007");
 	}
 	/**
 	 * 如果id对应的数据在持久数据中存在，则增加到列表中
@@ -131,19 +142,19 @@ public class MainActivity extends Activity {
 	private Map<String,Object> makeListDataByID(String id){
 //		String s = R.string.nid001;
 		if(id.equals("bk42-xz001")){
-			return Utils.makeListItemData("bk42-xz001","凶宅视频1",R.raw.l001,R.raw.r001,R.drawable.i001);
+			return Utils.makeListItemData("bk42-xz001",VTITLE1,R.raw.v001,R.drawable.i001);
 		}else if(id.equals("bk42-xz002")){
-			return Utils.makeListItemData("bk42-xz002","凶宅视频2",R.raw.l002,R.raw.r002,R.drawable.i002);
+			return Utils.makeListItemData("bk42-xz002",VTITLE2,R.raw.v002,R.drawable.i002);
 		}else if(id.equals("bk42-xz003")){
-			return Utils.makeListItemData("bk42-xz003","凶宅视频3",R.raw.l003,R.raw.r003,R.drawable.i003);
+			return Utils.makeListItemData("bk42-xz003",VTITLE3,R.raw.v003,R.drawable.i003);
 		}else if(id.equals("bk42-xz004")){
-			return Utils.makeListItemData("bk42-xz004", "凶宅视频4", R.raw.l004, R.raw.r004,R.drawable.i004);
+			return Utils.makeListItemData("bk42-xz004", VTITLE4,  R.raw.v004,R.drawable.i004);
 		}else if(id.equals("bk42-xz005")){
-			return Utils.makeListItemData("bk42-xz005", "凶宅视频5", R.raw.l005, R.raw.r005,R.drawable.i005);
-		}else if(id.equals("bk42-xz006")){
-			return Utils.makeListItemData("bk42-xz006", "凶宅视频6", R.raw.l006, R.raw.r006,R.drawable.i006);
-		}else if(id.equals("bk42-xz007")){
-			return Utils.makeListItemData("bk42-xz007", "凶宅视频7", R.raw.l007, R.raw.r007,R.drawable.i007);
+			return Utils.makeListItemData("bk42-xz005", VTITLE5,  R.raw.v005,R.drawable.i005);
+//		}else if(id.equals("bk42-xz006")){
+//			return Utils.makeListItemData("bk42-xz006", "凶宅视频6", R.raw.v006,R.drawable.i006);
+//		}else if(id.equals("bk42-xz007")){
+//			return Utils.makeListItemData("bk42-xz007", "凶宅视频7",  R.raw.v007,R.drawable.i007);
 		}
 		return null;
 	}
@@ -211,9 +222,9 @@ public class MainActivity extends Activity {
 	 * @param iid		背景图片的id
 	 */
 	private void addListDataAndStartRadioActivity(String id,String title,int lid,int rid,int iid){
-		listdata.add(Utils.makeListItemData(id, title, lid, rid, iid));			//增加listview得代理数据
+		listdata.add(Utils.makeListItemData(id, title,  rid, iid));			//增加listview得代理数据
 		addListDataToPrefences(id);												//增加到持久化数据
-		startVideoActivity(title,lid,vpath+rid,iid);							//开始播放声音
+		startVideoActivity(title,VPATH+rid);							//开始播放声音
 	}
 	/**
 	 * 传入必要参数，开始播放视频
@@ -222,17 +233,27 @@ public class MainActivity extends Activity {
 	 * @param opath		声音文件路径
 	 * @param iid		背景图片id
 	 */
-	private void startVideoActivity(String title,int lid,String opath,int iid){
-		//根据当前得数据跳转到下一界面自动播放
+//	private void startRadioActivity(String title,int lid,String opath,int iid){
+//		//根据当前得数据跳转到下一界面自动播放
+//		Intent intent = new Intent(MainActivity.this,VideoActivity.class);
+//		intent.putExtra("title", title);					//传送标题到下一个界面
+//		intent.putExtra("lrcpath", lid);					//歌词路径 
+//		intent.putExtra("oggpath", opath);					//传送播放路径到下一个界面
+//		intent.putExtra("imgpath", iid);					//传送背景图片到下一个界面
+//		MainActivity.this.startActivity(intent);		
+//	}
+	/**
+	 * 传入必要参数,开始播放视频
+	 * @param title		视频标题
+	 * @param vpath		视频文件路径
+	 */
+	private void startVideoActivity(String title,String vpath){
+		//根据当前获得的数据跳转到下一界面自动播放
 		Intent intent = new Intent(MainActivity.this,VideoActivity.class);
-		intent.putExtra("title", title);					//传送标题到下一个界面
-		intent.putExtra("lrcpath", lid);					//歌词路径 
-		intent.putExtra("oggpath", opath);					//传送播放路径到下一个界面
-		intent.putExtra("imgpath", iid);					//传送背景图片到下一个界面
-		MainActivity.this.startActivity(intent);		
+		intent.putExtra("title", title);
+		intent.putExtra("vpath", vpath);
+		MainActivity.this.startActivity(intent);
 	}
-	
-	
 	
 	/**
 	 * 初始化收件箱消息部分
@@ -255,8 +276,8 @@ public class MainActivity extends Activity {
 //				intent.putExtra("oggpath", vpath+((Integer)mapitem.get("oggpath")));		//传送播放路径到下一个界面
 //				MainActivity.this.startActivity(intent);
 //=======
-				startVideoActivity(mapitem.get("title").toString(),(Integer)mapitem.get("lrcpath"),
-						vpath+((Integer)mapitem.get("oggpath")),(Integer)mapitem.get("imgpath"));
+				startVideoActivity(mapitem.get("title").toString(),
+						VPATH+((Integer)mapitem.get("oggpath")));
 //>>>>>>> branch 'master' of https://github.com/sorcerer310/BakerStreet42.git
 			}});
 	}
