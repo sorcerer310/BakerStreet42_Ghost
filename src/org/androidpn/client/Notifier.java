@@ -15,11 +15,13 @@
  */
 package org.androidpn.client;
 
+import java.util.Map;
 import java.util.Random;
 
 import com.bsu.bakerstreet42_ghost.MainActivity;
 import com.bsu.bakerstreet42_ghost.R;
 import com.bsu.bakerstreet42_ghost.VideoActivity;
+import com.bsu.bakerstreet42_ghost.tools.Utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -85,36 +87,14 @@ public class Notifier {
             notification.when = System.currentTimeMillis();
             notification.tickerText = message;
 
-//            Intent intent = new Intent(context,NotificationDetailsActivity.class);
-            Intent intent = new Intent(context,VideoActivity.class);
+            Intent intent = new Intent(context,NotificationDetailsActivity.class);
+//            Intent intent = new Intent(context,VideoActivity.class);
             
-            String vtitle = "";
-            String vpath = "";            
-            if(uri.contains(":")){
-                String[] ss= uri.split(":");
-
-                if(ss[0].equals("vpath")){
-                	vpath = MainActivity.VPATH;
-                	if(ss[1].equals("v001")){
-                		vpath+=R.raw.v001;
-                		vtitle = MainActivity.VTITLE1;
-                	}else if(ss[1].equals("v002")){
-                		vpath+=R.raw.v002;
-                		vtitle = MainActivity.VTITLE2;
-                	}else if(ss[1].equals("v003")){
-                		vpath+=R.raw.v003;
-                		vtitle = MainActivity.VTITLE3;
-                	}else if(ss[1].equals("v004")){
-                		vpath+=R.raw.v004;
-                		vtitle = MainActivity.VTITLE4;
-                	}else if(ss[1].equals("v005")){
-                		vpath+=R.raw.v005;
-                		vtitle = MainActivity.VTITLE5;
-                	}
-                }
+            Map<String,String> m = Utils.parseVideoData(uri);
+            if(m!=null){
+            	intent.putExtra("title", m.get("vtitle").toString());
+            	intent.putExtra("vpath", m.get("vpath").toString());            
             }
-            intent.putExtra("title", vtitle);
-            intent.putExtra("vpath",vpath);            
             
             intent.putExtra(Constants.NOTIFICATION_ID, notificationId);
             intent.putExtra(Constants.NOTIFICATION_API_KEY, apiKey);
@@ -133,8 +113,7 @@ public class Notifier {
             PendingIntent contentIntent = PendingIntent.getActivity(context, random.nextInt(),
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            notification.setLatestEventInfo(context, title, message,
-                    contentIntent);
+            notification.setLatestEventInfo(context, title, message,contentIntent);
             notificationManager.notify(random.nextInt(), notification);
 
             //            Intent clickIntent = new Intent(

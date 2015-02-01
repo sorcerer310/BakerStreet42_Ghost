@@ -15,8 +15,11 @@
  */
 package org.androidpn.client;
 
+import java.util.Map;
+
 import com.bsu.bakerstreet42_ghost.R;
 import com.bsu.bakerstreet42_ghost.VideoActivity;
+import com.bsu.bakerstreet42_ghost.tools.Utils;
 
 import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
@@ -73,17 +76,20 @@ public final class NotificationReceiver extends BroadcastReceiver {
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
 
             //如果锁屏发出通知。否则直接显示指定的Activity
-//            if(NotificationReceiver.isScreenLocked(context)){
+            if(NotificationReceiver.isScreenLocked(context)){
             	Notifier notifier = new Notifier(context);
             	notifier.notify(notificationId, notificationApiKey,
                     notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
-//            }else{
+            }else{
 //            	Intent nintent = new Intent(context,NotificationDetailsActivity.class);
-//            	Intent nintent = new Intent(context,VideoActivity.class);
-//        		nintent.putExtra("title", "收到消息");
-//        		nintent.putExtra("vpath", "android.resource://com.bsu.bakerstreet42_ghost/"+R.raw.v001);
-//            	context.startActivity(nintent);
-//            }
+            	Intent nintent = new Intent(context,VideoActivity.class);
+            	nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	Map<String,String> m = Utils.parseVideoData(notificationUri);
+        		nintent.putExtra("title", m.get("vtitle").toString());
+        		nintent.putExtra("vpath", m.get("vpath").toString());
+            	context.startActivity(nintent);
+            	
+            }
         }
     }
     /**

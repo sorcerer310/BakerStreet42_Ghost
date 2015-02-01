@@ -8,6 +8,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bsu.bakerstreet42_ghost.MainActivity;
+import com.bsu.bakerstreet42_ghost.R;
+
 
 /**
  * 工具类，提供一些方便的工具函数
@@ -54,5 +57,37 @@ public class Utils {
 		map.put("oggpath", oggp);				//
 		map.put("imgpath", imgp);						//表示播放声音时显示的npc的图片路径
 		return map;
+	}
+	
+	public static Map<String,String> parseVideoData(String d){
+		Map<String,String> ret = null;
+        if(d.contains(":")){
+            String[] ss= d.split(":");
+            String vpath = "";
+            String vtitle = "";
+            if(ss[0].equals("vpath")){
+            	ret = new HashMap<String,String>();
+            	vpath = MainActivity.VPATH;
+            	if(ss[1].equals("v001")){
+            		vpath+=R.raw.v001;
+            		vtitle = MainActivity.VTITLE1;
+            	}else if(ss[1].equals("v002")){
+            		vpath+=R.raw.v002;
+            		vtitle = MainActivity.VTITLE2;
+            	}else if(ss[1].equals("v003")){
+            		vpath+=R.raw.v003;
+            		vtitle = MainActivity.VTITLE3;
+            	}else if(ss[1].equals("v004")){
+            		vpath+=R.raw.v004;
+            		vtitle = MainActivity.VTITLE4;
+            	}else if(ss[1].equals("v005")){
+            		vpath+=R.raw.v005;
+            		vtitle = MainActivity.VTITLE5;
+            	}
+            	ret.put("vtitle", vtitle);
+            	ret.put("vpath", vpath);
+            }
+        }
+        return ret;
 	}
 }
