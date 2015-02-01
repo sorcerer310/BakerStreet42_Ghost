@@ -87,8 +87,8 @@ public class Notifier {
             notification.when = System.currentTimeMillis();
             notification.tickerText = message;
 
-            Intent intent = new Intent(context,NotificationDetailsActivity.class);
-//            Intent intent = new Intent(context,VideoActivity.class);
+//            Intent intent = new Intent(context,NotificationDetailsActivity.class);
+            Intent intent = new Intent(context,VideoActivity.class);
             
             Map<String,String> m = Utils.parseVideoData(uri);
             if(m!=null){

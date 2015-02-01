@@ -9,8 +9,11 @@ import java.util.Map;
 //import org.androidpn.demoapp.R;
 
 
+import java.util.Properties;
+
 import org.androidpn.client.ServiceManager;
 
+import com.bsu.bakerstreet42_ghost.tools.PropertiesInstance;
 import com.bsu.bakerstreet42_ghost.tools.Utils;
 import com.bsu.bakerstreet42_ghost.widget.adapter.ListViewSimpleAdapter;
 
@@ -50,23 +53,30 @@ public class MainActivity extends Activity {
 	private List<Map<String,Object>> listdata;
 	private ListViewSimpleAdapter sa;
 	
+	private Properties properies = new Properties();
 	//视频音频资源路径
-	public final static String VPATH = "android.resource://com.bsu.bakerstreet42_ghost/";
-	public final static String VTITLE1 = "凶宅视频1";
-	public final static String VTITLE2 = "凶宅视频2";
-	public final static String VTITLE3 = "凶宅视频3";
-	public final static String VTITLE4 = "凶宅视频4";
-	public final static String VTITLE5 = "凶宅视频5";
+	private String vpath,vtitle1,vtitle2,vtitle3,vtitle4,vtitle5;
 	
 	//程序列表持久数据，防止玩家退出程序再进入获得的数据不对，如要重置需要在游戏重置功能操作
 	private SharedPreferences settings;
 	
 	//系统数据重置密码
-	private final String PREFERENCES_CLEAR_PASSWORD = "12345";			
+	private final String PREFERENCES_CLEAR_PASSWORD = "12345";
+	
+	private PropertiesInstance pi = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//获得配置数据
+		pi = PropertiesInstance.getInstance();
+		vpath = pi.properties.getProperty("vpath");
+		vtitle1 = pi.properties.getProperty("vtitle1");
+		vtitle2 = pi.properties.getProperty("vtitle2");
+		vtitle3 = pi.properties.getProperty("vtitle3");
+		vtitle4 = pi.properties.getProperty("vtitle4");
+		vtitle5 = pi.properties.getProperty("vtitle5");
 		
 		//设置标题
 //		this.setTitle("贝克街42号－威廉古堡之狼人");
@@ -142,15 +152,15 @@ public class MainActivity extends Activity {
 	private Map<String,Object> makeListDataByID(String id){
 //		String s = R.string.nid001;
 		if(id.equals("bk42-xz001")){
-			return Utils.makeListItemData("bk42-xz001",VTITLE1,R.raw.v001,R.drawable.i001);
+			return Utils.makeListItemData("bk42-xz001",vtitle1,R.raw.v001,R.drawable.i001);
 		}else if(id.equals("bk42-xz002")){
-			return Utils.makeListItemData("bk42-xz002",VTITLE2,R.raw.v002,R.drawable.i002);
+			return Utils.makeListItemData("bk42-xz002",vtitle2,R.raw.v002,R.drawable.i002);
 		}else if(id.equals("bk42-xz003")){
-			return Utils.makeListItemData("bk42-xz003",VTITLE3,R.raw.v003,R.drawable.i003);
+			return Utils.makeListItemData("bk42-xz003",vtitle3,R.raw.v003,R.drawable.i003);
 		}else if(id.equals("bk42-xz004")){
-			return Utils.makeListItemData("bk42-xz004", VTITLE4,  R.raw.v004,R.drawable.i004);
+			return Utils.makeListItemData("bk42-xz004", vtitle4,  R.raw.v004,R.drawable.i004);
 		}else if(id.equals("bk42-xz005")){
-			return Utils.makeListItemData("bk42-xz005", VTITLE5,  R.raw.v005,R.drawable.i005);
+			return Utils.makeListItemData("bk42-xz005", vtitle5,  R.raw.v005,R.drawable.i005);
 //		}else if(id.equals("bk42-xz006")){
 //			return Utils.makeListItemData("bk42-xz006", "凶宅视频6", R.raw.v006,R.drawable.i006);
 //		}else if(id.equals("bk42-xz007")){
@@ -223,8 +233,8 @@ public class MainActivity extends Activity {
 	 */
 	private void addListDataAndStartRadioActivity(String id,String title,int lid,int rid,int iid){
 		listdata.add(Utils.makeListItemData(id, title,  rid, iid));			//增加listview得代理数据
-		addListDataToPrefences(id);												//增加到持久化数据
-		startVideoActivity(title,VPATH+rid);							//开始播放声音
+		addListDataToPrefences(id);											//增加到持久化数据
+		startVideoActivity(title,vpath+rid);								//开始播放声音
 	}
 	/**
 	 * 传入必要参数，开始播放视频
@@ -270,15 +280,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> l, View v, int position,long id) {
 				Map<String,Object> mapitem = listdata.get(position);
-//<<<<<<< HEAD
-//				intent.putExtra("title", mapitem.get("title").toString());				//传送标题到下一个界面
-//				intent.putExtra("lrcpath", (Integer)mapitem.get("lrcpath"));				//歌词路径 
-//				intent.putExtra("oggpath", vpath+((Integer)mapitem.get("oggpath")));		//传送播放路径到下一个界面
-//				MainActivity.this.startActivity(intent);
-//=======
 				startVideoActivity(mapitem.get("title").toString(),
-						VPATH+((Integer)mapitem.get("oggpath")));
-//>>>>>>> branch 'master' of https://github.com/sorcerer310/BakerStreet42.git
+						vpath+((Integer)mapitem.get("oggpath")));
 			}});
 	}
 	
@@ -367,6 +370,30 @@ public class MainActivity extends Activity {
 		editor.clear();
 		editor.commit();
 		this.initPreferences();
+	}
+
+	public String getVpath() {
+		return vpath;
+	}
+
+	public String getVtitle1() {
+		return vtitle1;
+	}
+
+	public String getVtitle2() {
+		return vtitle2;
+	}
+
+	public String getVtitle3() {
+		return vtitle3;
+	}
+
+	public String getVtitle4() {
+		return vtitle4;
+	}
+
+	public String getVtitle5() {
+		return vtitle5;
 	}
 
 }

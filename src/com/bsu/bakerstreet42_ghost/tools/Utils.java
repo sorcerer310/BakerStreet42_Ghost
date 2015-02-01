@@ -67,22 +67,23 @@ public class Utils {
             String vtitle = "";
             if(ss[0].equals("vpath")){
             	ret = new HashMap<String,String>();
-            	vpath = MainActivity.VPATH;
+            	PropertiesInstance pi = PropertiesInstance.getInstance();
+            	vpath = pi.properties.getProperty("vpath");
             	if(ss[1].equals("v001")){
             		vpath+=R.raw.v001;
-            		vtitle = MainActivity.VTITLE1;
+            		vtitle = pi.properties.getProperty("vtitle1");
             	}else if(ss[1].equals("v002")){
             		vpath+=R.raw.v002;
-            		vtitle = MainActivity.VTITLE2;
+            		vtitle = pi.properties.getProperty("vtitle2");
             	}else if(ss[1].equals("v003")){
             		vpath+=R.raw.v003;
-            		vtitle = MainActivity.VTITLE3;
+            		vtitle = pi.properties.getProperty("vtitle3");
             	}else if(ss[1].equals("v004")){
             		vpath+=R.raw.v004;
-            		vtitle = MainActivity.VTITLE4;
+            		vtitle = pi.properties.getProperty("vtitle4");
             	}else if(ss[1].equals("v005")){
             		vpath+=R.raw.v005;
-            		vtitle = MainActivity.VTITLE5;
+            		vtitle = pi.properties.getProperty("vtitle5");
             	}
             	ret.put("vtitle", vtitle);
             	ret.put("vpath", vpath);

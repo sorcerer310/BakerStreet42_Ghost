@@ -87,6 +87,9 @@ public final class NotificationReceiver extends BroadcastReceiver {
             	Map<String,String> m = Utils.parseVideoData(notificationUri);
         		nintent.putExtra("title", m.get("vtitle").toString());
         		nintent.putExtra("vpath", m.get("vpath").toString());
+        		
+        		System.out.println(m.get("vtitle").toString()+"|||||||||||||||||||"+m.get("vpath").toString());
+        		
             	context.startActivity(nintent);
             	
             }
