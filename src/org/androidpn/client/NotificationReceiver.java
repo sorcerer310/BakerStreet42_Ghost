@@ -88,7 +88,10 @@ public final class NotificationReceiver extends BroadcastReceiver {
         		nintent.putExtra("title", m.get("vtitle").toString());
         		nintent.putExtra("vpath", m.get("vpath").toString());
         		
-        		System.out.println(m.get("vtitle").toString()+"|||||||||||||||||||"+m.get("vpath").toString());
+        		//向持久化数据中增加对应的数据
+        		Utils.saveSharedPreferences(context, notificationUri);
+        		
+//        		System.out.println(m.get("vtitle").toString()+"|||||||||||||||||||"+m.get("vpath").toString());
         		
             	context.startActivity(nintent);
             	

@@ -92,10 +92,10 @@ public class MainActivity extends Activity {
         serviceManager.setNotificationIcon(R.drawable.notification);
         serviceManager.startService();
 		
-//		initPreferences();						//初始化持久化数据
+		initPreferences();						//初始化持久化数据
 //		initNfcHelper();						//初始化nfc得帮助类
-//		initMessage();							//初始化消息
-//		initResetGameDialog();					//初始化重置数据窗口
+		initMessage();							//初始化消息
+		initResetGameDialog();					//初始化重置数据窗口
 		
 		
 
@@ -108,15 +108,15 @@ public class MainActivity extends Activity {
 		settings = this.getSharedPreferences("ListDatas", MODE_PRIVATE);
 		
 		//调试数据
-		Editor editor = settings.edit();
-		editor.putBoolean("bk42-xz001", true);
-		editor.putBoolean("bk42-xz002", true);
-		editor.putBoolean("bk42-xz003", true);
-		editor.putBoolean("bk42-xz004", true);
-		editor.putBoolean("bk42-xz005", true);
-//		editor.putBoolean("bk42-xz006", true);
-//		editor.putBoolean("bk42-xz007", true);
-		editor.commit();
+//		Editor editor = settings.edit();
+//		editor.putBoolean("bk42-xz001", true);
+//		editor.putBoolean("bk42-xz002", true);
+//		editor.putBoolean("bk42-xz003", true);
+//		editor.putBoolean("bk42-xz004", true);
+//		editor.putBoolean("bk42-xz005", true);
+////		editor.putBoolean("bk42-xz006", true);
+////		editor.putBoolean("bk42-xz007", true);
+//		editor.commit();
 		
 		listdata.clear();
 		//初始化数据并将已扫描的数据加入到列表中

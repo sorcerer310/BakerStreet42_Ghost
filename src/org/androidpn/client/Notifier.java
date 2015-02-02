@@ -88,6 +88,7 @@ public class Notifier {
             notification.tickerText = message;
 
 //            Intent intent = new Intent(context,NotificationDetailsActivity.class);
+            //创建开启VideoActivity类的意图.并向持久数据中增加该信息的数据
             Intent intent = new Intent(context,VideoActivity.class);
             
             Map<String,String> m = Utils.parseVideoData(uri);
@@ -95,6 +96,8 @@ public class Notifier {
             	intent.putExtra("title", m.get("vtitle").toString());
             	intent.putExtra("vpath", m.get("vpath").toString());            
             }
+            //向持久化数据中增加对应的数据
+            Utils.saveSharedPreferences(context, uri);
             
             intent.putExtra(Constants.NOTIFICATION_ID, notificationId);
             intent.putExtra(Constants.NOTIFICATION_API_KEY, apiKey);

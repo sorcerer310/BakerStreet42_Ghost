@@ -8,6 +8,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 import com.bsu.bakerstreet42_ghost.MainActivity;
 import com.bsu.bakerstreet42_ghost.R;
 
@@ -90,5 +94,32 @@ public class Utils {
             }
         }
         return ret;
+	}
+	/**
+	 * 设置持久数据,以供主activity显示已收到的信息
+	 * @param c		Context对象
+	 * @param uri	androidpn传过来的uri数据,格式为vpath:v001
+	 */
+	public static void saveSharedPreferences(Context c,String uri){
+		SharedPreferences settings = c.getSharedPreferences("ListDatas", Context.MODE_PRIVATE);
+		Editor editor = settings.edit();
+		
+		if(uri.contains(":")){
+            String[] ss= uri.split(":");
+            if(ss[0].equals("vpath")){
+            	if(ss[1].equals("v001")){
+            		editor.putBoolean("bk42-xz001", true);
+            	}else if(ss[1].equals("v002")){
+            		editor.putBoolean("bk42-xz002", true);
+            	}else if(ss[1].equals("v003")){
+            		editor.putBoolean("bk42-xz003", true);
+            	}else if(ss[1].equals("v004")){
+            		editor.putBoolean("bk42-xz004", true);
+            	}else if(ss[1].equals("v005")){
+            		editor.putBoolean("bk42-xz005", true);
+            	}
+            }
+        }
+		editor.commit();
 	}
 }
