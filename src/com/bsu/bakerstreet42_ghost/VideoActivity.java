@@ -91,7 +91,7 @@ public class VideoActivity extends Activity {
 		public void onCompletion(MediaPlayer arg0) {
 			Properties p = PropertiesInstance.getInstance().properties;
 			//如果播放的视频为视频2,则向PLCGameCenter
-			if(title.equals(p.getProperty("vtitle2").toString())){
+			if(title.equals(p.getProperty("finalvideotitle").toString())){
 				try {
 					byte[] bytes = Utils.sendPostRequestByForm(p.getProperty("plcgamecenter").toString(), "watch=yes");
 					String respstr = new String(bytes);
