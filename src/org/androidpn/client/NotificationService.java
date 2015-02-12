@@ -131,7 +131,7 @@ public class NotificationService extends Service {
     public void onDestroy() {
         Log.d(LOGTAG, "onDestroy()...");
         stop();
-    }
+    } 
 
     @Override
     public IBinder onBind(Intent intent) {

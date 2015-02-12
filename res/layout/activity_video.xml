@@ -2,24 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
-
-    <ImageView
-        android:id="@+id/iv_bg"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="0dp"
-        android:alpha="0.5"
-        android:src="@drawable/bg" />
+    tools:context="${relativePackage}.${activityClass}" 
+    >
 
     <TextView
         android:id="@+id/tv_videotitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/iv_bg"
         android:gravity="center"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -37,6 +27,7 @@
         android:id="@+id/bt_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_videotitle"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@color/white"

@@ -1,10 +1,13 @@
 package com.bsu.bakerstreet42_ghost.tools;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -122,4 +125,43 @@ public class Utils {
         }
 		editor.commit();
 	}
+	
+	/**
+	 * 模拟post方式发送表单数据
+	 * @param path			url路径
+	 * @param params		url参数
+	 * @return				返回服务器响应的数据
+	 * @throws Exception
+	 */
+    public static byte[] sendPostRequestByForm(String path, String params) throws Exception{
+        URL url = new URL(path);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");// 提交模式
+        // conn.setConnectTimeout(10000);//连接超时 单位毫秒
+        // conn.setReadTimeout(2000);//读取超时 单位毫秒
+        conn.setDoOutput(true);// 是否输入参数
+        byte[] bypes = params.toString().getBytes();
+        conn.getOutputStream().write(bypes);// 输入参数
+        InputStream inStream=conn.getInputStream();
+        return readInputStream(inStream);
+    }
+    
+    /**
+     * 从数据流中读取数据
+     * @param inStream		输入数据流
+     * @return				返回数据流数据
+     * @throws Exception
+     */
+    private static byte[] readInputStream(InputStream inStream) throws Exception{
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        while( (len = inStream.read(buffer)) !=-1 ){
+            outStream.write(buffer, 0, len);
+        }
+        byte[] data = outStream.toByteArray();//网页的二进制数据
+        outStream.close();
+        inStream.close();
+        return data;
+    }
 }

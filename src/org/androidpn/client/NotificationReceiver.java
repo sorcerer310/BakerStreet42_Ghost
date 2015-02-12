@@ -97,7 +97,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
             	
             }
         }
-    }
+    } 
     /**
      * 判断是否处于锁屏状态
      * @param c
