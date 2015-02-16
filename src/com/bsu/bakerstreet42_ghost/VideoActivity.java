@@ -83,6 +83,8 @@ public class VideoActivity extends Activity {
 			}
 		});
 
+//		MediaPlayer mp = new MediaPlayer();
+//		mp.seton
 		
 		//当视频播放完成,判断是否为指定视频,如果是,则访问PLC_SendSerial?watch=yes,向plc发送指令
 		vv.setOnCompletionListener(new OnCompletionListener(){
@@ -90,8 +92,13 @@ public class VideoActivity extends Activity {
 		@Override
 		public void onCompletion(MediaPlayer arg0) {
 			Properties p = PropertiesInstance.getInstance().properties;
+//			System.out.println("======================"+title+"================");
+//			System.out.println("======================"+p.getProperty("finalvideotitle").toString()+"========================");
+			String fvtitle = p.getProperty("finalvideotitle").toString();
+//			System.out.println("====================="+fvtitle.equalsIgnoreCase(title));
 			//如果播放的视频为视频2,则向PLCGameCenter
-			if(title.equals(p.getProperty("finalvideotitle").toString())){
+			if(title.equals(fvtitle)){
+				System.out.println(title+"=="+fvtitle);
 				try {
 					byte[] bytes = Utils.sendPostRequestByForm(p.getProperty("plcgamecenter").toString(), "watch=yes");
 					String respstr = new String(bytes);
