@@ -2,34 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" 
-    >
-
-    <TextView
-        android:id="@+id/tv_videotitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:gravity="center"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp" />
+    tools:context="${relativePackage}.${activityClass}" >
 
     <VideoView
         android:id="@+id/vv"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_videotitle"
         android:gravity="center_horizontal" />
 
     <Button
         android:id="@+id/bt_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_videotitle"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:background="@color/white"
         android:text="  返   回  " />
 

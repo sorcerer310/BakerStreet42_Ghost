@@ -20,6 +20,8 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -36,12 +38,19 @@ public class VideoActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_video);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);   
+		getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN , WindowManager.LayoutParams. FLAG_FULLSCREEN);  
+        setContentView(R.layout.activity_video); 
+		
+//		setContentView(R.layout.activity_video);
+		
+		
 		
 		//用来处理android.os.NetworkOnMainThreadException异常
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		    StrictMode.setThreadPolicy(policy);
+		    StrictMode.setThreadPolicy(policy); 
 		}
 		
 		Intent intent = this.getIntent();
@@ -52,11 +61,13 @@ public class VideoActivity extends Activity {
 		
 		vv = (VideoView) findViewById(R.id.vv);
 		mc = new MediaController(this);
-		tv = (TextView) findViewById(R.id.tv_videotitle);
-		tv.setText(title);
+//		tv = (TextView) findViewById(R.id.tv_videotitle);
+//		tv.setText(title);
 		
 		
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1280, 720);
+//		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1280, 720);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(900,720);
+//		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1280,1024);
 		lp.addRule(RelativeLayout.CENTER_IN_PARENT);
 		vv.setLayoutParams(lp);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
