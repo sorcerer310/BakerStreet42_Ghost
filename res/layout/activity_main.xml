@@ -16,14 +16,13 @@
         android:layout_margin="0dp"
         android:alpha="1.0"
         android:src="@drawable/bg" />
-    
+
     <ListView
         android:id="@+id/lv_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_timer"
         android:layout_below="@+id/tv_title" >
-
     </ListView>
 
     <TextView
@@ -38,5 +37,4 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ff444444"
         android:textSize="30sp" />
-
 </RelativeLayout>
