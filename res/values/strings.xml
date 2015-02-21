@@ -20,9 +20,13 @@
     <string name="ntitle005">塔纳托斯</string>
     <string name="ntitle006">美杜莎</string>
     <string name="ntitle007">奥丁</string>
+
     <color name="alpha_white">#55FFFFFF</color>
     <color name="alpha0">#00ffffff</color>
     <color name="alpha_black">#55000000</color>
     <color name="white">#ddffffff</color>
+
+    <string name="title_activity_main_fragment">MainFragmentActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

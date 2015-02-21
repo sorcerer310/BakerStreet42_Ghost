@@ -16,25 +16,64 @@
         android:layout_margin="0dp"
         android:alpha="1.0"
         android:src="@drawable/bg" />
-
-    <ListView
-        android:id="@+id/lv_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_timer"
-        android:layout_below="@+id/tv_title" >
-    </ListView>
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/iv_bg"
-        android:layout_below="@+id/iv_bg"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:text="探险家的信息:"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#ff444444"
-        android:textSize="30sp" />
+    
+    <RelativeLayout  
+	    android:layout_width="match_parent"  
+	    android:layout_height="match_parent" 
+	    android:layout_below="@+id/iv_bg"
+	    >  
+	  
+	    <TabHost  
+	        android:id="@android:id/tabhost"  
+	        android:layout_width="match_parent"  
+	        android:layout_height="match_parent"  
+	        android:layout_alignParentLeft="true"  
+	        android:layout_alignParentBottom="true"  >  
+	  
+	        <LinearLayout  
+	            android:layout_width="match_parent"  
+	            android:layout_height="match_parent"  
+	            android:orientation="vertical" >  
+	  
+	            <FrameLayout  
+	                android:id="@android:id/tabcontent"  
+	                android:layout_width="match_parent"  
+	                android:layout_height="match_parent"  
+	                android:layout_weight="1" >  
+		             <LinearLayout   
+		                android:id="@+id/alwayswet"  
+		                android:layout_width="fill_parent"  
+		                android:layout_height="fill_parent"  
+		                android:orientation="vertical">  
+						<fragment
+						    android:id="@+id/fragment_list"  
+        					android:name="com.bsu.bakerstreet42_ghost.FragmentList"  
+					        android:layout_width="fill_parent"  
+					        android:layout_height="45dp" 
+						    >
+						    
+						</fragment>
+		            </LinearLayout>  
+		              
+		            <LinearLayout   
+		                android:id="@+id/isanimal"  
+		                android:layout_width="fill_parent"  
+		                android:layout_height="fill_parent"  
+		                android:orientation="vertical">  
+		                <ImageView   
+		                    android:scaleType="fitXY"  
+		                    android:layout_height="fill_parent"  
+		                    android:layout_width="fill_parent"  
+		                    android:src="@drawable/notification"/>  
+		            </LinearLayout>  
+	            </FrameLayout>  
+	            <TabWidget  
+	                android:id="@android:id/tabs"  
+	                android:layout_width="match_parent"  
+	                android:layout_height="wrap_content" >  
+	            </TabWidget>  
+	        </LinearLayout>  
+	    </TabHost>  
+	  
+	</RelativeLayout>  
 </RelativeLayout>

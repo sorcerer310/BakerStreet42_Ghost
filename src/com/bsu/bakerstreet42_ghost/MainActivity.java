@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-//import org.androidpn.demoapp.R;
-
-
 import java.util.Properties;
 
 import org.androidpn.client.ServiceManager;
 
+import com.bsu.bakerstreet42_ghost.FragmentList.OnFragmentInteractionListener;
 import com.bsu.bakerstreet42_ghost.tools.PropertiesInstance;
 import com.bsu.bakerstreet42_ghost.tools.Utils;
 import com.bsu.bakerstreet42_ghost.widget.adapter.ListViewSimpleAdapter;
@@ -25,10 +22,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.app.Fragment;
 import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -45,12 +44,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnFragmentInteractionListener {
 //	private NfcActivityHelper nfchelper;	//帮助类
 	
 	//列表控件
-	private ListView lv_message;
-	private List<Map<String,Object>> listdata;
+//	private ListView lv_message;
+//	private List<Map<String,Object>> listdata;
 	private ListViewSimpleAdapter sa;
 	
 	private Properties properies = new Properties();
@@ -64,12 +63,17 @@ public class MainActivity extends Activity {
 	private final String PREFERENCES_CLEAR_PASSWORD = "12345";
 	
 	private PropertiesInstance pi = null;
+	
+	private FragmentList fragment_list;						//列表Fragment对象
+	private List<Map<String,Object>> listdata;					//列表控件的数据集
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		//获得配置数据
+		fragment_list = (FragmentList) this.getFragmentManager().findFragmentById(R.id.fragment_list);
+		listdata = fragment_list.getListdata();
+//		//获得配置数据
 		pi = PropertiesInstance.getInstance();
 		vpath = pi.properties.getProperty("vpath");
 		vtitle1 = pi.properties.getProperty("vtitle1");
@@ -77,15 +81,15 @@ public class MainActivity extends Activity {
 		vtitle3 = pi.properties.getProperty("vtitle3");
 		vtitle4 = pi.properties.getProperty("vtitle4");
 		vtitle5 = pi.properties.getProperty("vtitle5");
-		
-		//设置标题
-//		this.setTitle("贝克街42号－威廉古堡之狼人");
-		TextView tv_title = (TextView) findViewById(R.id.tv_title);
-		tv_title.setTypeface(Typeface.createFromAsset(getAssets(), "fzzy.ttf"));
+//		
+//		//设置标题
+////		this.setTitle("贝克街42号－威廉古堡之狼人");
+//		TextView tv_title = (TextView) findViewById(R.id.tv_title);
+//		tv_title.setTypeface(Typeface.createFromAsset(getAssets(), "fzzy.ttf"));
 		
 		//初始化代理数据
-		if(listdata==null)
-			listdata = new ArrayList<Map<String,Object>>();
+//		if(listdata==null)
+//			listdata = new ArrayList<Map<String,Object>>();
 		
         //开启接收消息的服务
         ServiceManager serviceManager = new ServiceManager(this);
@@ -116,7 +120,8 @@ public class MainActivity extends Activity {
 		editor.putBoolean("bk42-xz005", true);
 		editor.commit();
 		
-		listdata.clear();
+		//清理片段中list数据
+		fragment_list.clear();
 		//初始化数据并将已扫描的数据加入到列表中
 		makeListDataInitPreByID("bk42-xz001");
 		makeListDataInitPreByID("bk42-xz002");
@@ -126,6 +131,7 @@ public class MainActivity extends Activity {
 //		makeListDataInitPreByID("bk42-xz006");
 //		makeListDataInitPreByID("bk42-xz007");
 	}
+	
 	/**
 	 * 如果id对应的数据在持久数据中存在，则增加到列表中
 	 * 如果id对应的数据在持久数据中不存在，则在持久数据中初始化该数据
@@ -232,7 +238,7 @@ public class MainActivity extends Activity {
 	private void addListDataAndStartRadioActivity(String id,String title,int lid,int rid,int iid){
 		listdata.add(Utils.makeListItemData(id, title,  rid, iid));			//增加listview得代理数据
 		addListDataToPrefences(id);											//增加到持久化数据
-		startVideoActivity(title,vpath+rid);								//开始播放声音
+		fragment_list.startVideoActivity(this,title,vpath+rid);								//开始播放声音
 	}
 	/**
 	 * 传入必要参数，开始播放视频
@@ -250,37 +256,27 @@ public class MainActivity extends Activity {
 //		intent.putExtra("imgpath", iid);					//传送背景图片到下一个界面
 //		MainActivity.this.startActivity(intent);		
 //	}
-	/**
-	 * 传入必要参数,开始播放视频
-	 * @param title		视频标题
-	 * @param vpath		视频文件路径
-	 */
-	private void startVideoActivity(String title,String vpath){
-		//根据当前获得的数据跳转到下一界面自动播放
-		Intent intent = new Intent(MainActivity.this,VideoActivity.class);
-		intent.putExtra("title", title);
-		intent.putExtra("vpath", vpath);
-		MainActivity.this.startActivity(intent);
-	}
+//	/**
+//	 * 传入必要参数,开始播放视频
+//	 * @param title		视频标题
+//	 * @param vpath		视频文件路径
+//	 */
+//	private void startVideoActivity(String title,String vpath){
+//		//根据当前获得的数据跳转到下一界面自动播放
+//		Intent intent = new Intent(MainActivity.this,VideoActivity.class);
+//		intent.putExtra("title", title);
+//		intent.putExtra("vpath", vpath);
+//		MainActivity.this.startActivity(intent);
+//	}
 	
 	/**
 	 * 初始化收件箱消息部分
 	 */
 	private void initMessage(){
-		lv_message = (ListView) findViewById(R.id.lv_message);
-		
 		sa = new ListViewSimpleAdapter(this,listdata,R.layout.listitem
 				,new String[]{"title"}
 				,new int[]{R.id.item_title});
-		
-		lv_message.setAdapter(sa);
-		lv_message.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> l, View v, int position,long id) {
-				Map<String,Object> mapitem = listdata.get(position);
-				startVideoActivity(mapitem.get("title").toString(),
-						vpath+((Integer)mapitem.get("oggpath")));
-			}});
+		fragment_list.setListViewSimpleAdapter(this,sa, vpath);
 	}
 	
 	@Override
@@ -392,6 +388,12 @@ public class MainActivity extends Activity {
 
 	public String getVtitle5() {
 		return vtitle5;
+	}
+
+	@Override
+	public void onFragmentInteraction(Uri uri) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
