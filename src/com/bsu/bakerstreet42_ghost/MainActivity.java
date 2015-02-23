@@ -108,13 +108,13 @@ public class MainActivity extends Activity {
 		settings = this.getSharedPreferences("ListDatas", MODE_PRIVATE);
 		
 		//调试数据
-		Editor editor = settings.edit();
-		editor.putBoolean("bk42-xz001", true);
-		editor.putBoolean("bk42-xz002", true);
-		editor.putBoolean("bk42-xz003", true);
-		editor.putBoolean("bk42-xz004", true);
-		editor.putBoolean("bk42-xz005", true);
-		editor.commit();
+//		Editor editor = settings.edit();
+//		editor.putBoolean("bk42-xz001", true);
+//		editor.putBoolean("bk42-xz002", true);
+//		editor.putBoolean("bk42-xz003", true);
+//		editor.putBoolean("bk42-xz004", true);
+//		editor.putBoolean("bk42-xz005", true);
+//		editor.commit();
 		
 		listdata.clear();
 		//初始化数据并将已扫描的数据加入到列表中
