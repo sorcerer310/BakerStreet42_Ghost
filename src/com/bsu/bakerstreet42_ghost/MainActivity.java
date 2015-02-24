@@ -352,6 +352,11 @@ public class MainActivity extends Activity {
 						Toast.makeText(MainActivity.this, "重置游戏成功", Toast.LENGTH_SHORT).show();
 						//密码正确则清除数据
 						clearPreferences();
+						try {
+							Utils.sendPostRequestByForm(PropertiesInstance.getInstance().properties.getProperty("plcgamecenterreset"), "");
+						} catch (Exception e) {
+							Toast.makeText(MainActivity.this, "重置服务器状态失败:"+e.toString(), Toast.LENGTH_SHORT).show();
+						}
 					}
 					else
 						Toast.makeText(MainActivity.this, "密码错误", Toast.LENGTH_SHORT).show();

@@ -127,6 +127,35 @@ public class Utils {
 	}
 	
 	/**
+	 * 判断视频是否已经发送到手机中
+	 * @param c		环境变量
+	 * @param uri	视频的uri数据
+	 */
+	public static boolean isVideoExistSharedPreferences(Context c,String uri){
+		SharedPreferences settings = c.getSharedPreferences("ListDatas", Context.MODE_PRIVATE);
+//		Editor editor = settings.edit();
+
+		if(uri.contains(":")){
+            String[] ss= uri.split(":");
+            if(ss[0].equals("vpath")){
+            	if(ss[1].equals("v001") && settings.getBoolean("bk42-xz001", false)){
+            		return true;
+            	}else if(ss[1].equals("v002") && settings.getBoolean("bk42-xz002", false)){
+            		return true;
+            	}else if(ss[1].equals("v003") && settings.getBoolean("bk42-xz003", false)){
+            		return true;
+            	}else if(ss[1].equals("v004") && settings.getBoolean("bk42-xz004", false)){
+            		return true;
+            	}else if(ss[1].equals("v005") && settings.getBoolean("bk42-xz005", false)){
+            		return true;
+            	}
+            }
+        }
+		return false;
+	}
+	
+	
+	/**
 	 * 模拟post方式发送表单数据
 	 * @param path			url路径
 	 * @param params		url参数
