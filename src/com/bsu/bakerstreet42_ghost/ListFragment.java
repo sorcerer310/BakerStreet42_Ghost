@@ -5,17 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.bsu.bakerstreet42_ghost.tools.PropertiesInstance;
-import com.bsu.bakerstreet42_ghost.tools.Utils;
 import com.bsu.bakerstreet42_ghost.widget.adapter.ListViewSimpleAdapter;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +24,13 @@ import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
- * must implement the {@link FragmentList.OnFragmentInteractionListener}
+ * must implement the {@link ListFragment.OnFragmentInteractionListener}
  * interface to handle interaction events. Use the
- * {@link FragmentList#newInstance} factory method to create an instance of this
+ * {@link ListFragment#newInstance} factory method to create an instance of this
  * fragment.
  *
  */
-public class FragmentList extends Fragment {
+public class ListFragment extends Fragment {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -63,8 +60,8 @@ public class FragmentList extends Fragment {
 	 * @return A new instance of fragment FragmentList.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static FragmentList newInstance(String param1, String param2) {
-		FragmentList fragment = new FragmentList();
+	public static ListFragment newInstance(String param1, String param2) {
+		ListFragment fragment = new ListFragment();
 		Bundle args = new Bundle();
 		args.putString(ARG_PARAM1, param1);
 		args.putString(ARG_PARAM2, param2);
@@ -72,7 +69,7 @@ public class FragmentList extends Fragment {
 		return fragment;
 	}
 
-	public FragmentList() {
+	public ListFragment() {
 		// Required empty public constructor
 	}
 
@@ -102,7 +99,7 @@ public class FragmentList extends Fragment {
 
 		
 		//设置标题
-		View view = inflater.inflate(R.layout.fragment_fragment_list, container, false); 
+		View view = inflater.inflate(R.layout.fragment_list, container, false); 
 		TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
 		tv_title.setTypeface(Typeface.createFromAsset(view.getContext().getAssets(), "fzzy.ttf"));
 
@@ -114,7 +111,7 @@ public class FragmentList extends Fragment {
 		if(listdata==null)
 			listdata = new ArrayList<Map<String,Object>>();
 		
-		return inflater.inflate(R.layout.fragment_fragment_list, container,false);
+		return inflater.inflate(R.layout.fragment_list, container,false);
 	}
 
 	/**

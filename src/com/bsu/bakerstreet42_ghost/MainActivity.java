@@ -1,15 +1,12 @@
 package com.bsu.bakerstreet42_ghost;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.androidpn.client.ServiceManager;
 
-import com.bsu.bakerstreet42_ghost.FragmentList.OnFragmentInteractionListener;
+import com.bsu.bakerstreet42_ghost.ListFragment.OnFragmentInteractionListener;
 import com.bsu.bakerstreet42_ghost.tools.PropertiesInstance;
 import com.bsu.bakerstreet42_ghost.tools.Utils;
 import com.bsu.bakerstreet42_ghost.widget.adapter.ListViewSimpleAdapter;
@@ -21,30 +18,21 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.net.Uri;
-import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.app.Fragment;
-import android.text.InputType;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnFragmentInteractionListener {
+public class MainActivity extends FragmentActivity implements OnFragmentInteractionListener {
 //	private NfcActivityHelper nfchelper;	//帮助类
 	
 	//列表控件
@@ -64,14 +52,25 @@ public class MainActivity extends Activity implements OnFragmentInteractionListe
 	
 	private PropertiesInstance pi = null;
 	
-	private FragmentList fragment_list;						//列表Fragment对象
+	private ListFragment fragment_list;						//列表Fragment对象
 	private List<Map<String,Object>> listdata;					//列表控件的数据集
+	
+	private FragmentTabHost fth;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		fragment_list = (FragmentList) this.getFragmentManager().findFragmentById(R.id.fragment_list);
+		fth = (FragmentTabHost) findViewById(android.R.id.tabhost);
+		fth.setup(this, getSupportFragmentManager(),R.id.realtabcontent);
+		
+		TabSpec ts1 = fth.newTabSpec("视频");
+		fth.addTab(ts1, ListFragment.class, null);
+		TabSpec ts2 = fth.newTabSpec("进度");
+		fth.addTab(ts2, GameProcessFragment.class, null);
+		
+		
+//		fragment_list = this.getSupportFragmentManager().findFragmentById(arg0);
 		listdata = fragment_list.getListdata();
 //		//获得配置数据
 		pi = PropertiesInstance.getInstance();
