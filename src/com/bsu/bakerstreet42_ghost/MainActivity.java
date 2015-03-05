@@ -29,6 +29,7 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -68,6 +69,12 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//用来处理android.os.NetworkOnMainThreadException异常
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		    StrictMode.setThreadPolicy(policy); 
+		}
 		
 		//获得配置数据
 		pi = PropertiesInstance.getInstance();
@@ -353,7 +360,9 @@ public class MainActivity extends Activity {
 						//密码正确则清除数据
 						clearPreferences();
 						try {
-							Utils.sendPostRequestByForm(PropertiesInstance.getInstance().properties.getProperty("plcgamecenterreset"), "");
+							byte[] bytes = Utils.sendPostRequestByForm(PropertiesInstance.getInstance().properties.getProperty("plcgamecenterreset"), "");
+							String retstr = new String(bytes);
+							Toast.makeText(MainActivity.this, "重置服务器状态成功:"+retstr, Toast.LENGTH_SHORT).show();
 						} catch (Exception e) {
 							Toast.makeText(MainActivity.this, "重置服务器状态失败:"+e.toString(), Toast.LENGTH_SHORT).show();
 						}

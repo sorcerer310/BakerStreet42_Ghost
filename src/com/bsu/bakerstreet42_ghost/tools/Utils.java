@@ -169,8 +169,8 @@ public class Utils {
         // conn.setConnectTimeout(10000);//连接超时 单位毫秒
         // conn.setReadTimeout(2000);//读取超时 单位毫秒
         conn.setDoOutput(true);// 是否输入参数
-        byte[] bypes = params.toString().getBytes();
-        conn.getOutputStream().write(bypes);// 输入参数
+        byte[] bytes = params.toString().getBytes();
+        conn.getOutputStream().write(bytes);// 输入参数
         InputStream inStream=conn.getInputStream();
         return readInputStream(inStream);
     }
