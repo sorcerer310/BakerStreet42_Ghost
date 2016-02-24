@@ -111,7 +111,7 @@ public class VideoActivity extends Activity {
 			if(title.equals(fvtitle)){
 				System.out.println(title+"=="+fvtitle);
 				try {
-					byte[] bytes = Utils.sendPostRequestByForm(p.getProperty("plcgamecenter").toString(), "watch=yes");
+					byte[] bytes = Utils.sendPostRequestByForm(p.getProperty("plcgamecenter").toString(), "plccmd=success");
 					String respstr = new String(bytes);
 					Toast.makeText(VideoActivity.this, respstr, Toast.LENGTH_SHORT).show();
 					System.out.println("=================发送了watch=yes消息到PLCGameCenter");
