@@ -361,13 +361,13 @@ public class MainActivity extends Activity {
 						clearPreferences();
 
 						//现在不需要重置服务器状态了
-//						try {
-//							byte[] bytes = Utils.sendPostRequestByForm(PropertiesInstance.getInstance().properties.getProperty("plcgamecenterreset"), "");
-//							String retstr = new String(bytes);
-//							Toast.makeText(MainActivity.this, "重置服务器状态成功:"+retstr, Toast.LENGTH_SHORT).show();
-//						} catch (Exception e) {
-//							Toast.makeText(MainActivity.this, "重置服务器状态失败:"+e.toString(), Toast.LENGTH_SHORT).show();
-//						}
+						try {
+							byte[] bytes = Utils.sendPostRequestByForm(PropertiesInstance.getInstance().properties.getProperty("plcgamecenterreset"), "");
+							String retstr = new String(bytes);
+							Toast.makeText(MainActivity.this, "重置服务器状态成功:"+retstr, Toast.LENGTH_SHORT).show();
+						} catch (Exception e) {
+							Toast.makeText(MainActivity.this, "重置服务器状态失败:"+e.toString(), Toast.LENGTH_SHORT).show();
+						}
 
 					}
 					else
