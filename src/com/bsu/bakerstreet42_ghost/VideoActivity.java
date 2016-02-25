@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import com.bsu.bakerstreet42_ghost.MainActivity;
 import com.bsu.bakerstreet42_ghost.R;
+import com.bsu.bakerstreet42_ghost.tools.DeviceUtils;
 import com.bsu.bakerstreet42_ghost.tools.PropertiesInstance;
 import com.bsu.bakerstreet42_ghost.tools.Utils;
 
@@ -58,7 +59,13 @@ public class VideoActivity extends Activity {
 		final String title = intent.getStringExtra("title");
 
 		Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
-		
+
+		if(DeviceUtils.isScreenLocked(this))        //判断手机是否处于屏幕关闭状态
+		{
+			DeviceUtils.vibrate(this, 500);         //让手机振动500ms
+			DeviceUtils.wakeScreen(this);           //如果处于关闭屏幕状态则唤醒屏幕
+		}
+
 		vv = (VideoView) findViewById(R.id.vv);
 		mc = new MediaController(this);
 //		tv = (TextView) findViewById(R.id.tv_videotitle);
