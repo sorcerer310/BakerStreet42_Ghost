@@ -75,32 +75,53 @@ public final class NotificationReceiver extends BroadcastReceiver {
             Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
 
-            
-            //先获得视频数据
+            //活的视频数据
             Map<String,String> m = Utils.parseVideoData(notificationUri);
-            //判断该视频如果已存在,就不发送,如果不存在则发送视频到手机
-            if(!Utils.isVideoExistSharedPreferences(context, notificationUri)){
-	            //如果锁屏发出通知。否则直接显示指定的Activity
-	            if(NotificationReceiver.isScreenLocked(context)){
-	            	Notifier notifier = new Notifier(context);
-	//            	notifier.notify(notificationId, notificationApiKey,
-	//                    notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
-	            	notifier.notify(notificationId, notificationApiKey,
-	            		"贝克街42号-凶宅:"+m.get("vtitle").toString(), notificationMessage, notificationUri,notificationFrom,packetId);
-	            }else{
-	
-	            	Intent nintent = new Intent(context,VideoActivity.class);
-	            	nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	
-	        		nintent.putExtra("title", m.get("vtitle").toString());
-	        		nintent.putExtra("vpath", m.get("vpath").toString());
-	
-	        		//向持久化数据中增加对应的数据
-	        		Utils.saveSharedPreferences(context, notificationUri);
-	        		
-	            	context.startActivity(nintent);
-	            }
+            //如果该视频存在则不播放
+            if(!Utils.isVideoExistSharedPreferences(context, notificationUri)) {
+                Intent nintent = new Intent(context,VideoActivity.class);
+                nintent.putExtra(Constants.NOTIFICATION_ID,notificationId);
+                nintent.putExtra(Constants.NOTIFICATION_API_KEY,notificationApiKey);
+                nintent.putExtra(Constants.NOTIFICATION_TITLE,notificationTitle);
+                nintent.putExtra(Constants.NOTIFICATION_MESSAGE,notificationMessage);
+                nintent.putExtra(Constants.NOTIFICATION_URI,notificationUri);
+                nintent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
+                nintent.putExtra(Constants.PACKET_ID, packetId);
+                nintent.putExtra("title",m.get("vtitle").toString());
+                nintent.putExtra("vpath",m.get("vpath").toString());
+                nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                //向持久化数据中增加对应的数据
+                Utils.saveSharedPreferences(context, notificationUri);
+
+                context.startActivity(nintent);
             }
+
+            //先获得视频数据
+//            Map<String,String> m = Utils.parseVideoData(notificationUri);
+//            //判断该视频如果已存在,就不发送,如果不存在则发送视频到手机
+//            if(!Utils.isVideoExistSharedPreferences(context, notificationUri)){
+//	            //如果锁屏发出通知。否则直接显示指定的Activity
+//	            if(NotificationReceiver.isScreenLocked(context)){
+//	            	Notifier notifier = new Notifier(context);
+//	//            	notifier.notify(notificationId, notificationApiKey,
+//	//                    notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
+//	            	notifier.notify(notificationId, notificationApiKey,
+//	            		"贝克街42号-凶宅:"+m.get("vtitle").toString(), notificationMessage, notificationUri,notificationFrom,packetId);
+//	            }else{
+//
+//	            	Intent nintent = new Intent(context,VideoActivity.class);
+//	            	nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//	        		nintent.putExtra("title", m.get("vtitle").toString());
+//	        		nintent.putExtra("vpath", m.get("vpath").toString());
+//
+//	        		//向持久化数据中增加对应的数据
+//	        		Utils.saveSharedPreferences(context, notificationUri);
+//
+//	            	context.startActivity(nintent);
+//	            }
+//            }
         }
     } 
     /**
