@@ -75,10 +75,11 @@ public final class NotificationReceiver extends BroadcastReceiver {
             Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
 
+            if(notificationUri==null || notificationUri.equals(""))
+                return;
+
             //视频数据
             Map<String,String> m = Utils.parseVideoData(notificationUri);
-            if(m==null)
-                return;
 
             //如果该视频存在则不播放
             if(!Utils.isVideoExistSharedPreferences(context, notificationUri)) {
