@@ -45,9 +45,7 @@ public class VideoActivity extends Activity {
         setContentView(R.layout.activity_video); 
 		
 //		setContentView(R.layout.activity_video);
-		
-		
-		
+
 		//用来处理android.os.NetworkOnMainThreadException异常
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -114,7 +112,7 @@ public class VideoActivity extends Activity {
 //			System.out.println("======================"+p.getProperty("finalvideotitle").toString()+"========================");
 			String fvtitle = p.getProperty("finalvideotitle").toString();
 //			System.out.println("====================="+fvtitle.equalsIgnoreCase(title));
-			//如果播放的视频为视频2,则向PLCGameCenter
+			//如果播放的视频为视频4,则向PLCGameCenter
 			if(title.equals(fvtitle)){
 				System.out.println(title+"=="+fvtitle);
 				try {

@@ -75,8 +75,11 @@ public final class NotificationReceiver extends BroadcastReceiver {
             Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
 
-            //活的视频数据
+            //视频数据
             Map<String,String> m = Utils.parseVideoData(notificationUri);
+            if(m==null)
+                return;
+
             //如果该视频存在则不播放
             if(!Utils.isVideoExistSharedPreferences(context, notificationUri)) {
                 Intent nintent = new Intent(context,VideoActivity.class);
@@ -87,8 +90,8 @@ public final class NotificationReceiver extends BroadcastReceiver {
                 nintent.putExtra(Constants.NOTIFICATION_URI,notificationUri);
                 nintent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
                 nintent.putExtra(Constants.PACKET_ID, packetId);
-                nintent.putExtra("title",m.get("vtitle").toString());
-                nintent.putExtra("vpath",m.get("vpath").toString());
+                nintent.putExtra("title", m.get("vtitle").toString());
+                nintent.putExtra("vpath", m.get("vpath").toString());
                 nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 //向持久化数据中增加对应的数据
